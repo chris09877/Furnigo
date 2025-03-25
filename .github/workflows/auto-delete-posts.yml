@@ -1,0 +1,17 @@
+name: Run Auto Delete Posts
+
+on:
+  schedule:
+    - cron: "0 * * * *"  # Runs every hour
+
+jobs:
+  run-supabase-function:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Invoke Supabase Edge Function
+        run: |
+          curl -X POST "${{ secrets.SUPABASE_PROJECT_URL }}/functions/v1/auto-delete-posts" \
+               -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+               -H "Content-Type: application/json" \
+               -d '{}'
